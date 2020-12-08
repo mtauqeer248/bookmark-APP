@@ -1,0 +1,39 @@
+
+.container {
+    padding:50px;
+    background-image: linear-gradient(rgb(63, 135, 243),rgb(99, 99, 245));
+    width: 80%;
+    text-align: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    box-shadow: aquamarine solid 5px;
+}
+.container input{
+    width:500px;
+    height:40px;
+    border:  aquamarine solid;
+    background-color: rgb(121, 202, 175);
+}
+.container button{
+    width:150px;
+    height:50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: normal;
+    font-size: larger;
+    background-image: linear-gradient(rgb(63, 135, 243),rgb(99, 99, 245));
+}
+.container label{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 30px;
+}
+.card-container > .card{
+    display: inline-block;
+    box-shadow: 0 0 10px black;
+    display: inline-block;
+    height: 100px;
+    width: 300px;
+    padding: 20px;
+    margin: 10px;
+    background-color: aqua;
+}
