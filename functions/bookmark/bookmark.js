@@ -13,6 +13,7 @@ const typeDefs = gql`
   }
   type Mutation {
     addBookmark(title: String!, url: String!): Bookmark
+    deleteTask(id: ID!): Bookmark
   }
 `
 
@@ -31,7 +32,7 @@ const resolvers = {
 
         return result.data.map(d => {
           return {
-            id: d.ts,
+            id: d.ref.id,
             title: d.data.title,
             url: d.data.url
           }
@@ -43,7 +44,7 @@ const resolvers = {
     }
   },
   Mutation: {
-    addBookmark: async (_, { title, url }) => {
+    addBookmark: async (_, { title, url,id }) => {
       console.log(title, url)
       try {
         var adminClient = new faunadb.Client({ secret: 'fnAD8ERFPIACBNF2d5qaP7_E3Iv9AsIzNbderRpI' });
@@ -53,20 +54,41 @@ const resolvers = {
             q.Collection('bookmark'),
             {
               data: {
+                id,
                 title,
                 url
               }
             },
           )
         )
-        return result.data.data
+        return result.data
       }
       catch (err) {
         console.log(err)
       }
+    },
+    deleteTask:async(__,{id})=>{
+      try{
+        const reqId=JSON.stringify(id)
+      const reqId2=JSON.parse(id);
+      console.log(id);
+      var adminClient =new faunadb.Client({secret:"fnAD8ERFPIACBNF2d5qaP7_E3Iv9AsIzNbderRpI"})
+      const result = await adminClient.query(
+        q.Delete(q.Ref(q.Collection("bookmark"),id))
+      );
+      return {
+        id: result.ref.id,
+        title: result.data.title,
+        url: result.data.url,
+      };
+      }catch(error){
+        return error.toString();
+      }
     }
   }
+
 }
+
 
 const server = new ApolloServer({
   typeDefs,

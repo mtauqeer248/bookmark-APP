@@ -22,6 +22,13 @@ const ADD_BOOKMARK = gql`
         }
     }
 `
+const DELETE_BOOKMARK = gql`
+  mutation deleteTask($id: ID!) {
+    deleteTask(id: $id) {
+      id
+    }
+  }
+`;
 
 export default function Home() {
 
@@ -30,6 +37,7 @@ export default function Home() {
 
     const { error, loading, data } = useQuery(GET_BOOKMARKS);
     const [addBookmark] = useMutation(ADD_BOOKMARK);
+    const [deleteTask] = useMutation(DELETE_BOOKMARK);
     const handleSubmit = () => {
         console.log(titleField.value)
         console.log(urlField.value)
@@ -41,6 +49,15 @@ export default function Home() {
             refetchQueries: [{ query: GET_BOOKMARKS }]
         })
     }
+    const handleDelete = (id) => {
+        ///console.log(JSON.stringify(id))
+        deleteTask({
+          variables: {
+            id: id,
+          },
+          refetchQueries: [{ query: GET_BOOKMARKS }],
+        });
+      };
     
 
     if (error)
@@ -70,8 +87,19 @@ export default function Home() {
         <h2>My Bookmark List</h2>
         {/* {JSON.stringify(data.bookmarks)} */}
 
-        <div className="card-container">
-            {data.bookmarks.map((bm) => <Card url={bm.url} title={bm.title} />)}
+        <div >
+        {data && data.bookmarks.map((bm) =>
+                <div className="card-container">
+                   {/*<Card url={bm.url} title={bm.title}  />*/}
+                     <h1>{bm.title}</h1>
+                      <h2>{bm.url}</h2>
+                    <button onClick={ ()=> handleDelete(bm.id)}>Delete</button>
+                </div>
+             
+             )}
+        
+             
+        
         </div>
 
     </div>
