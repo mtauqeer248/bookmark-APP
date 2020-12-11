@@ -89,7 +89,7 @@ export default function Home() {
 
         <div >
         {data && data.bookmarks.map((bm) =>
-                <div className="card-container">
+                <div className="card-container" key={bm.id}>
                    {/*<Card url={bm.url} title={bm.title}  />*/}
                      <h1>{bm.title}</h1>
                       <h2>{bm.url}</h2>
